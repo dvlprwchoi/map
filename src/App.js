@@ -29,6 +29,13 @@ class App extends React.Component {
     },
   };
 
+  // handle marker drag end function
+  handleMarkerDragEnd = (e) => {
+    let newLat = e.latLng.lat();
+    let newLng = e.latLng.lng();
+    console.log(newLat, newLng);
+  };
+
   render() {
     const MapWithAMarker = withScriptjs(
       withGoogleMap((props) => (
@@ -36,7 +43,11 @@ class App extends React.Component {
           defaultZoom={10}
           defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
         >
-          <Marker position={{ lat: 30.2672, lng: -97.7431 }}>
+          <Marker
+            draggable={true}
+            onDragEnd={this.handleMarkerDragEnd}
+            position={{ lat: 30.2672, lng: -97.7431 }}
+          >
             <InfoWindow>
               <div>Hello</div>
             </InfoWindow>
