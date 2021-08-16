@@ -7,6 +7,9 @@ import {
   Marker,
 } from 'react-google-maps';
 
+const Google_map_API = process.env.REACT_APP_GOOGLE_MAP_API;
+// console.log(Google_map_API);
+
 class App extends React.Component {
   render() {
     const MapWithAMarker = withScriptjs(
@@ -22,7 +25,7 @@ class App extends React.Component {
 
     return (
       <MapWithAMarker
-        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${Google_map_API}&v=3.exp&libraries=geometry,drawing,places`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div style={{ height: `400px` }} />}
         mapElement={<div style={{ height: `100%` }} />}
