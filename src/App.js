@@ -1,25 +1,34 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import {
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from 'react-google-maps';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+class App extends React.Component {
+  render() {
+    const MapWithAMarker = withScriptjs(
+      withGoogleMap((props) => (
+        <GoogleMap
+          defaultZoom={8}
+          defaultCenter={{ lat: -34.397, lng: 150.644 }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+          <Marker position={{ lat: -34.397, lng: 150.644 }} />
+        </GoogleMap>
+      ))
+    );
+
+    return (
+      <MapWithAMarker
+        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+        loadingElement={<div style={{ height: `100%` }} />}
+        containerElement={<div style={{ height: `400px` }} />}
+        mapElement={<div style={{ height: `100%` }} />}
+      />
+    );
+  }
 }
 
 export default App;
