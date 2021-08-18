@@ -7,9 +7,12 @@ import {
   GoogleMap,
   Marker,
 } from 'react-google-maps';
+import Geocode from 'react-geocode';
 
 const Google_map_API = process.env.REACT_APP_GOOGLE_MAP_API;
 // console.log(Google_map_API);
+
+Geocode.setApiKey(Google_map_API);
 
 class App extends React.Component {
   state = {
@@ -33,7 +36,15 @@ class App extends React.Component {
   handleMarkerDragEnd = (e) => {
     let newLat = e.latLng.lat();
     let newLng = e.latLng.lng();
-    console.log(newLat, newLng);
+    // console.log(newLat, newLng);
+
+    // Geocode
+    // Getting address information from new lat and lng
+    Geocode.fromLatLng(newLat, newLng).then((response) => {
+      console.log(response.results[0]);
+      const address = response.results[0].formatted_address;
+      console.log(address);
+    });
   };
 
   render() {
