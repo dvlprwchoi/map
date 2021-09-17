@@ -220,17 +220,6 @@ class App extends React.Component {
               <div>{this.state.address}</div>
             </InfoWindow>
           </Marker>
-          <Autocomplete
-            style={{
-              width: '100%',
-              height: '40px',
-              paddingLeft: 16,
-              marginTop: 2,
-              marginBottom: '2rem',
-            }}
-            types={['(regions)']}
-            onPlaceSelected={this.onPlaceSelected}
-          />
         </GoogleMap>
       ))
     );
@@ -260,6 +249,26 @@ class App extends React.Component {
           containerElement={<div style={{ height: `400px` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         />
+        <Autocomplete
+          style={{
+            width: '100%',
+            height: '40px',
+            paddingLeft: 16,
+            marginTop: 2,
+            marginBottom: '2rem',
+          }}
+          types={['(regions)']}
+          onPlaceSelected={this.onPlaceSelected}
+        />
+        <p>
+          <h3>
+            Made by{' '}
+            <span>
+              <a href="https://woosikchoi.com">Woo-Sik Choi</a>
+            </span>{' '}
+            in September, 2021
+          </h3>
+        </p>
       </div>
     );
   }
