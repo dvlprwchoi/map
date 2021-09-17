@@ -34,6 +34,53 @@ class App extends React.Component {
     },
   };
 
+  componentDidMount() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.setState(
+          {
+            mapPosition: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+            markerPosition: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          },
+          () => {
+            Geocode.fromLatLng(
+              position.coords.latitude,
+              position.coords.longitude
+            ).then((response) => {
+              // console.log(response.results[0]);
+              const address = response.results[0].formatted_address;
+              // console.log(address);
+
+              const addressArray = response.results[0].address_components;
+              // console.log(addressArray);
+
+              const city = this.getCity(addressArray);
+              const county = this.getCounty(addressArray);
+              const state = this.getState(addressArray);
+              const zip = this.getZip(addressArray);
+
+              console.log(city, county, state, zip);
+
+              this.setState({
+                address: address ? address : '',
+                city: city ? city : '',
+                county: county ? county : '',
+                state: state ? state : '',
+                zip: zip ? zip : '',
+              });
+            });
+          }
+        );
+      });
+    }
+  }
+
   // get city name function
   getCity = (addressArray) => {
     let city = '';
