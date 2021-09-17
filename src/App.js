@@ -9,6 +9,7 @@ import {
 } from 'react-google-maps';
 import Geocode from 'react-geocode';
 import { Descriptions } from 'antd';
+import Autocomplete from 'react-google-autocomplete';
 
 const Google_map_API = process.env.REACT_APP_GOOGLE_MAP_API;
 // console.log(Google_map_API);
@@ -118,6 +119,36 @@ class App extends React.Component {
     });
   };
 
+  // onPlaceSelected function
+  onPlaceSelected = (place) => {
+    const address = place.formatted_address;
+    // console.log(address);
+    const addressArray = place.address_components;
+    // console.log(addressArray);
+    const city = this.getCity(addressArray);
+    const county = this.getCounty(addressArray);
+    const state = this.getState(addressArray);
+    const zip = this.getZip(addressArray);
+    const newLat = place.geometry.location.lat();
+    const newLng = place.geometry.location.lng();
+    console.log(city, county, state, zip);
+    this.setState({
+      address: address ? address : '',
+      city: city ? city : '',
+      county: county ? county : '',
+      state: state ? state : '',
+      zip: zip ? zip : '',
+      markerPosition: {
+        lat: newLat,
+        lng: newLng,
+      },
+      mapPosition: {
+        lat: newLat,
+        lng: newLng,
+      },
+    });
+  };
+
   render() {
     const MapWithAMarker = withScriptjs(
       withGoogleMap((props) => (
@@ -142,6 +173,17 @@ class App extends React.Component {
               <div>Hello</div>
             </InfoWindow>
           </Marker>
+          <Autocomplete
+            style={{
+              width: '100%',
+              height: '40px',
+              paddingLeft: 16,
+              marginTop: 2,
+              marginBottom: '2rem',
+            }}
+            types={['(regions)']}
+            onPlaceSelected={this.onPlaceSelected}
+          />
         </GoogleMap>
       ))
     );
