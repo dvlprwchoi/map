@@ -18,7 +18,7 @@ class App extends React.Component {
   state = {
     address: '',
     city: '',
-    area: '',
+    county: '',
     state: '',
     zoom: 15,
     height: 400,
@@ -98,6 +98,21 @@ class App extends React.Component {
       const zip = this.getZip(addressArray);
 
       console.log(city, county, state, zip);
+
+      this.setState({
+        address: address ? address : '',
+        city: city ? city : '',
+        county: county ? county : '',
+        state: state ? state : '',
+        markerPosition: {
+          lat: newLat,
+          lng: newLng,
+        },
+        mapPosition: {
+          lat: newLat,
+          lng: newLng,
+        },
+      });
     });
   };
 
@@ -106,12 +121,20 @@ class App extends React.Component {
       withGoogleMap((props) => (
         <GoogleMap
           defaultZoom={10}
-          defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
+          // defaultCenter={{ lat: 30.2672, lng: -97.7431 }}
+          defaultCenter={{
+            lat: this.state.mapPosition.lat,
+            lng: this.state.mapPosition.lng,
+          }}
         >
           <Marker
             draggable={true}
             onDragEnd={this.handleMarkerDragEnd}
-            position={{ lat: 30.2672, lng: -97.7431 }}
+            // position={{ lat: 30.2672, lng: -97.7431 }}
+            position={{
+              lat: this.state.markerPosition.lat,
+              lng: this.state.markerPosition.lng,
+            }}
           >
             <InfoWindow>
               <div>Hello</div>
