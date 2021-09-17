@@ -8,6 +8,7 @@ import {
   Marker,
 } from 'react-google-maps';
 import Geocode from 'react-geocode';
+import { Descriptions } from 'antd';
 
 const Google_map_API = process.env.REACT_APP_GOOGLE_MAP_API;
 // console.log(Google_map_API);
@@ -104,6 +105,7 @@ class App extends React.Component {
         city: city ? city : '',
         county: county ? county : '',
         state: state ? state : '',
+        zip: zip ? zip : '',
         markerPosition: {
           lat: newLat,
           lng: newLng,
@@ -145,12 +147,31 @@ class App extends React.Component {
     );
 
     return (
-      <MapWithAMarker
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${Google_map_API}&v=3.exp&libraries=geometry,drawing,places`}
-        loadingElement={<div style={{ height: `100%` }} />}
-        containerElement={<div style={{ height: `400px` }} />}
-        mapElement={<div style={{ height: `100%` }} />}
-      />
+      <div style={{ padding: '1rem', margin: '0 auto', maxWidth: 1000 }}>
+        <h1>Google Map Basic</h1>
+        <Descriptions bordered>
+          <Descriptions.Item label="City">{this.state.city}</Descriptions.Item>
+          <Descriptions.Item label="County">
+            {this.state.county}
+          </Descriptions.Item>
+          <Descriptions.Item label="State">
+            {this.state.state}
+          </Descriptions.Item>
+          <Descriptions.Item label="Zip Code">
+            {this.state.zip}
+          </Descriptions.Item>
+          <Descriptions.Item label="Address" span={2}>
+            {this.state.address}
+          </Descriptions.Item>
+        </Descriptions>
+
+        <MapWithAMarker
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${Google_map_API}&v=3.exp&libraries=geometry,drawing,places`}
+          loadingElement={<div style={{ height: `100%` }} />}
+          containerElement={<div style={{ height: `400px` }} />}
+          mapElement={<div style={{ height: `100%` }} />}
+        />
+      </div>
     );
   }
 }
