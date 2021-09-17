@@ -217,7 +217,7 @@ class App extends React.Component {
             }}
           >
             <InfoWindow>
-              <div>Hello</div>
+              <div>{this.state.address}</div>
             </InfoWindow>
           </Marker>
           <Autocomplete
