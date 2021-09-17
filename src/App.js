@@ -32,6 +32,50 @@ class App extends React.Component {
     },
   };
 
+  // get city name function
+  getCity = (addressArray) => {
+    let city = '';
+    for (let i = 0; i < addressArray.length; i++) {
+      if (addressArray[i].types[0] === 'locality') {
+        city = addressArray[i].long_name;
+        return city;
+      }
+    }
+  };
+
+  // get county name function
+  getCounty = (addressArray) => {
+    let county = '';
+    for (let i = 0; i < addressArray.length; i++) {
+      if (addressArray[i].types[0] === 'administrative_area_level_2') {
+        county = addressArray[i].long_name;
+        return county;
+      }
+    }
+  };
+
+  // get state name function
+  getState = (addressArray) => {
+    let state = '';
+    for (let i = 0; i < addressArray.length; i++) {
+      if (addressArray[i].types[0] === 'administrative_area_level_1') {
+        state = addressArray[i].long_name;
+        return state;
+      }
+    }
+  };
+
+  // get zip code function
+  getZip = (addressArray) => {
+    let zip = '';
+    for (let i = 0; i < addressArray.length; i++) {
+      if (addressArray[i].types[0] === 'postal_code') {
+        zip = addressArray[i].long_name;
+        return zip;
+      }
+    }
+  };
+
   // handle marker drag end function
   handleMarkerDragEnd = (e) => {
     let newLat = e.latLng.lat();
@@ -41,9 +85,19 @@ class App extends React.Component {
     // Geocode
     // Getting address information from new lat and lng
     Geocode.fromLatLng(newLat, newLng).then((response) => {
-      console.log(response.results[0]);
+      // console.log(response.results[0]);
       const address = response.results[0].formatted_address;
-      console.log(address);
+      // console.log(address);
+
+      const addressArray = response.results[0].address_components;
+      // console.log(addressArray);
+
+      const city = this.getCity(addressArray);
+      const county = this.getCounty(addressArray);
+      const state = this.getState(addressArray);
+      const zip = this.getZip(addressArray);
+
+      console.log(city, county, state, zip);
     });
   };
 
